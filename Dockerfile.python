@@ -1,0 +1,14 @@
+FROM python:3.9-slim
+
+WORKDIR /application
+
+COPY main.py /application/
+COPY requirements.txt /application/
+RUN pip install -r requirements.txt
+
+ENV DB_HOST=${DB_HOST:-'host.docker.internal'}
+ENV DB_USER=${DB_USER:-'root'}
+ENV DB_PASSWORD=${DB_PASSWORD:-'my-secret-pw'}
+ENV DB_NAME=${DB_NAME:-'mysql'}
+
+CMD ["python", "main.py"]
