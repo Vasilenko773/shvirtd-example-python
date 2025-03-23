@@ -1,21 +1,20 @@
 #!/bin/bash
 
-# Путь к репозиторию
-REPO_DIR="../shvirtd-example-python"
-REPO_URL="https://github.com/Vasilenko773/shvirtd-example-python"
 
-# Проверка, существует ли директория репозитория
-if [ ! -d "$REPO_DIR" ]; then
-  echo "Репозиторий не найден, скачиваю..."
-  git clone "$REPO_URL" "$REPO_DIR"
-else
-  echo "Репозиторий скачен ранее."
+REPO_DIR="/opt"
+REPO_URL="https://github.com/Vasilenko773/shvirtd-example-python"  # Ваш URL репозитория
+
+if [ ! -d "/opt" ]; then
+  echo "Каталог /opt не существует. Создаю его."
+  sudo mkdir -p /opt
 fi
 
-# Переходим в директорию репозитория
-cd "$REPO_DIR"
+echo "Клонирую репозиторий..."
+git clone "$REPO_URL" "$REPO_DIR" || { echo "Не удалось клонировать репозиторий"; exit 1; }
 
-# Запускаем Docker Compose
-echo "Запускаю сервисы"
-docker compose up -d
+cd "$REPO_DIR" || { echo "Не удалось перейти в директорию $REPO_DIR"; exit 1; }
 
+echo "Запускаю сервисы..."
+sudo docker-compose up -d || { echo "Не удалось запустить сервисы"; exit 1; }
+
+echo "Проект успешно запущен!"
