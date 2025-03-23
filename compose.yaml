@@ -35,9 +35,3 @@ services:
         ipv4_address: 172.20.0.10
     restart: always
 
-#networks:
- # backend:
-  #  driver: bridge
-   # ipam:
-    #  config:
-     #   - subnet: "172.20.0.0/24"
